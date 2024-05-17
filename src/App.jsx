@@ -2,62 +2,122 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
-  const initialState = [
-    { id: 1, name: "John", age: 20 },
-    { id: 2, name: "Doe", age: 21 },
-  ];
-  const [users, setUsers] = useState(initialState);
-  const [name, setName] = useState(""); // 이름에 대한 상태
-  const [age, setAge] = useState("");   // 나이에 대한 상태
-
-  const addUser = (e) => {
-    e.preventDefault();
-    if (!name || !age) {
-      alert("이름과 나이를 모두 입력하세요.");
-      return;
-    }
-
-    const newUser = {
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [workList, setWorkList] = useState([
+    {
       id: Date.now(),
-      name: name,
-      age: parseInt(age),
-    };
-    setUsers([...users, newUser]);
-    setName(""); // 이름 입력 필드 초기화
-    setAge("");  // 나이 입력 필드 초기화
+      title: "순공 시간 확인하기",
+      content: "순공 시간 체크해서 공부해봅시다.",
+      isDone: true,
+    },
+  ]);
+
+  const clickAddWorkHandler = () => {
+       // title과 content가 모두 비어 있지 않은 경우에만 작업 항목 추가
+    if (title.trim() && content.trim()) {
+        // 새로운 작업 항목 추가
+      setWorkList([
+        ...workList, // 기존 작업 목록 유지
+        { id: Date.now(), title, content, isDone: false },
+      ]);
+      setTitle("");   
+      setContent("");
+    }
   };
 
-  const removeUser = (id) => {
-    setUsers(users.filter((user) => user.id !== id));
+  const toggleCompletionHandler = (id) => {
+    setWorkList(
+      workList.map((item) =>
+        item.id === id ? { ...item, isDone: !item.isDone } : item
+      )
+    );
+  };
+
+  const clickDeleteHandler = (id) => {
+    setWorkList(workList.filter((item) => item.id !== id));
   };
 
   return (
-    <>
-      <h1>사용자 리스트</h1>
-      <form onSubmit={addUser}>
+    <div className="layout">
+      <div className="title">
+        <div className="title1">My Todo List</div>
+        <div className="title2">React</div>
+      </div>
+      <div className="inputArea">
+        <div className="titleText">제목 :</div>
         <input
-          type="text"
-          placeholder="이름"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          className="inputTitle"
+          value={title}
+          onChange={(event) => setTitle(event.target.value)}
         />
+        <div className="contentText">내용 :</div>
         <input
-          type="number"
-          placeholder="나이"
-          value={age}
-          onChange={(e) => setAge(e.target.value)}
+          className="inputContent"
+          value={content}
+          onChange={(event) => setContent(event.target.value)}
         />
-        <button type="submit">사용자 추가</button>
-      </form>
-      <ul>
-        {users.map((user) => (
-          <li key={user.id} style={{ display: "flex", alignItems: "center" }}>
-            이름: {user.name}, 나이: {user.age}
-            <button onClick={() => removeUser(user.id)} style={{ marginLeft: "10px" }}>삭제</button>
-          </li>
-        ))}
-      </ul>
-    </>
+        <button className="addWork" onClick={clickAddWorkHandler}>
+          추가하기
+        </button>
+      </div>
+      <section className="working">
+        <h3 className="workingTitle">Working..🔥</h3>
+        <div className="workingList">
+          {workList
+            .filter((item) => !item.isDone)
+            .map((item) => (
+              <div key={item.id} className="workingComponent">
+                <div className="content">
+                  <h3>{item.title}</h3>
+                  <p>{item.content}</p>
+                </div>
+                <div className="buttons">
+                  <button
+                    className="deleteWork"
+                    onClick={() => clickDeleteHandler(item.id)}
+                  >
+                    삭제하기
+                  </button>
+                  <button
+                    className="completeWork"
+                    onClick={() => toggleCompletionHandler(item.id)}
+                  >
+                    완료
+                  </button>
+                </div>
+              </div>
+            ))}
+        </div>
+      </section>
+      <section className="done">
+        <h3 className="doneTitle">Done..!🎉</h3>
+        <div className="doneList">
+          {workList
+            .filter((item) => item.isDone)
+            .map((item) => (
+              <div key={item.id} className="doneComponent">
+                <h3>{item.title}</h3>
+                <p>{item.content}</p>
+                <div className="buttons">
+                  <button
+                    className="deleteWork"
+                    onClick={() => clickDeleteHandler(item.id)}
+                  >
+                    삭제하기
+                  </button>
+                  <button
+                    className="uncompletedWork"
+                    onClick={() => toggleCompletionHandler(item.id)}
+                  >
+                    취소
+                  </button>
+                </div>
+              </div>
+            ))}
+        </div>
+      </section>
+    </div>
   );
 }
 

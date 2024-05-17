@@ -1,42 +1,142 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* 공통 스타일 */
+.layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh; /* 전체 화면 높이를 차지 */
+  padding: 20px;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.title1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.title2 {
+  font-size: 1.5rem;
+  color: #555;
 }
 
-.card {
-  padding: 2em;
+/* InputForm 컴포넌트 스타일 */
+.inputArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-.read-the-docs {
-  color: #888;
+.inputArea .titleText,
+.inputArea .contentText {
+  font-size: 1.2rem;
+  margin: 5px 0;
+}
+
+.inputArea .inputTitle,
+.inputArea .inputContent {
+  padding: 10px;
+  margin-bottom: 10px;
+  width: 300px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.inputArea .addWork {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.inputArea .addWork:hover {
+  background-color: #0056b3;
+}
+
+/* WorkList 컴포넌트 스타일 */
+.working,
+.done {
+  width: 80%;
+  max-width: 600px;
+  margin-bottom: 20px;
+}
+
+.workingTitle,
+.doneTitle {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.workingList,
+.doneList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.workingComponent,
+.doneComponent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.content h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.content p {
+  margin: 5px 0 0;
+  font-size: 1rem;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.deleteWork,
+.completeWork,
+.uncompletedWork {
+  padding: 5px 10px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.deleteWork {
+  background-color: #dc3545;
+  color: white;
+}
+
+.deleteWork:hover {
+  background-color: #c82333;
+}
+
+.completeWork,
+.uncompletedWork {
+  background-color: #28a745;
+  color: white;
+}
+
+.completeWork:hover,
+.uncompletedWork:hover {
+  background-color: #218838;
 }
